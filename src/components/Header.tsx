@@ -1,27 +1,44 @@
 import { NavLink } from 'react-router-dom'
+import { LogoMark } from './SiteLogo'
+import { navItems, site } from '../content/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  isActive
-    ? 'font-medium text-neutral-900 underline underline-offset-4'
-    : 'text-neutral-600 hover:text-neutral-900'
+  `nav-link text-sm ${isActive ? 'nav-link-active' : ''}`
+
+const contactClass = ({ isActive }: { isActive: boolean }) =>
+  `btn-outline shrink-0 px-3 py-2 text-xs sm:text-sm ${isActive ? '!border-blue-deep !bg-blue-deep !text-white' : ''}`
 
 export default function Header() {
   return (
-    <header className="border-b border-neutral-200 bg-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-6 px-4 py-4">
-        <NavLink to="/" className="text-lg font-semibold tracking-tight">
-          Hanson Auto Repair
+    <header className="sticky top-0 z-40 border-b border-line bg-card">
+      <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2 sm:gap-4 sm:py-2.5">
+        <NavLink
+          to="/"
+          className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3"
+        >
+          <LogoMark />
+          <span className="text-base font-semibold leading-tight tracking-tight text-navy sm:text-lg">
+            {site.name}
+          </span>
         </NavLink>
-        <nav className="flex flex-wrap items-center gap-4 text-sm">
-          <NavLink to="/" end className={linkClass}>
-            Home
-          </NavLink>
-          <NavLink to="/about" className={linkClass}>
-            About
-          </NavLink>
-          <NavLink to="/contact" className={linkClass}>
-            Contact
-          </NavLink>
+
+        <nav className="flex flex-wrap items-center justify-end gap-3 sm:gap-5" aria-label="Main">
+          {navItems.map((item) =>
+            item.to === '/contact' ? (
+              <NavLink key={item.to} to={item.to} className={contactClass}>
+                {item.label}
+              </NavLink>
+            ) : (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/'}
+                className={linkClass}
+              >
+                {item.label}
+              </NavLink>
+            ),
+          )}
         </nav>
       </div>
     </header>
