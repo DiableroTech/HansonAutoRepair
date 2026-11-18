@@ -1,12 +1,13 @@
+import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import { LogoMark } from './SiteLogo'
 import { navItems, site } from '../content/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `nav-link text-sm ${isActive ? 'nav-link-active' : ''}`
+  `nav-link text-sm sm:text-sm ${isActive ? 'nav-link-active' : ''}`
 
 const contactClass = ({ isActive }: { isActive: boolean }) =>
-  `btn-outline shrink-0 px-3 py-2 text-xs sm:text-sm ${isActive ? '!border-blue-deep !bg-blue-deep !text-white' : ''}`
+  `header-contact-link shrink-0 text-xs sm:text-sm ${isActive ? 'is-active' : ''}`
 
 export default function Header() {
   return (
@@ -14,19 +15,27 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2 sm:gap-4 sm:py-2.5">
         <NavLink
           to="/"
-          className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3"
+          aria-label={site.name}
+          className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3"
         >
           <LogoMark />
-          <span className="text-base font-semibold leading-tight tracking-tight text-navy sm:text-lg">
+          <span className="hidden truncate font-semibold leading-tight tracking-tight text-navy min-[520px]:inline min-[520px]:text-base min-[520px]:whitespace-normal lg:text-lg">
             {site.name}
           </span>
         </NavLink>
 
-        <nav className="flex flex-wrap items-center justify-end gap-3 sm:gap-5" aria-label="Main">
+        <nav
+          className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-4 md:gap-5"
+          aria-label="Main"
+        >
           {navItems.map((item) =>
             item.to === '/contact' ? (
-              <NavLink key={item.to} to={item.to} className={contactClass}>
-                {item.label}
+              <NavLink key={item.to} to={item.to} className={contactClass} aria-label="Contact">
+                <IoChatbubbleEllipsesOutline
+                  className="header-contact-messenger-icon sm:hidden"
+                  aria-hidden
+                />
+                <span className="hidden sm:inline">{item.label}</span>
               </NavLink>
             ) : (
               <NavLink

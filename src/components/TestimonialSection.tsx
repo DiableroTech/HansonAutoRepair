@@ -201,7 +201,10 @@ export default function TestimonialSection() {
           </p>
         </header>
 
-        <ul className="testimonial-grid mt-6 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        <ul
+          className="testimonial-grid mt-6 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4"
+          aria-label="Customer reviews"
+        >
           {testimonials.map((item) => (
             <li key={item.id} className="flex min-h-0">
               <TestimonialCard
